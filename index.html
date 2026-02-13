@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coffret d'Amitié pour toi Gilbert 💜</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0e8ff;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  h1 {
+    color: #6a0dad;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+  }
+
+  p#welcome {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 30px;
+  }
+
+  .btn-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  button {
+    padding: 15px 25px;
+    font-size: 1em;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    color: #fff;
+  }
+
+  button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+
+  .motivation { background: #6a0dad; }
+  .reconfort { background: #ff6fb5; }
+  .fun { background: #6ec1e4; }
+
+  #message {
+    font-size: 1.3em;
+    color: #333;
+    min-height: 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Cœurs flottants */
+  .heart {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: red;
+    transform: rotate(45deg);
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  .heart::before,
+  .heart::after {
+    content: "";
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: red;
+    border-radius: 50%;
+  }
+  .heart::before { top: -7.5px; left: 0; }
+  .heart::after { left: 7.5px; top: 0; }
+
+  @keyframes float {
+    0% { transform: translateY(0) scale(0.5) rotate(0deg); opacity:0.7; }
+    100% { transform: translateY(-150px) scale(1) rotate(360deg); opacity:0; }
+  }
+
+  /* Cœurs qui apparaissent au clic avec rebond */
+  .click-heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: pink;
+    transform: rotate(45deg) scale(0);
+    opacity: 1;
+    pointer-events: none;
+    z-index: 10;
+  }
+  .click-heart::before,
+  .click-heart::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: pink;
+    border-radius: 50%;
+  }
+  .click-heart::before { top: -10px; left: 0; }
+  .click-heart::after { left: 10px; top: 0; }
+
+  @keyframes pop {
+    0% { transform: rotate(45deg) scale(0); opacity:1; }
+    50% { transform: rotate(45deg) scale(1.2); }
+    100% { transform: translateY(-150px) rotate(45deg) scale(0.5); opacity:0; }
+  }
+
+  /* Mini feu d'artifice */
+  .firework-heart {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: pink;
+    transform: rotate(45deg);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .firework-heart::before,
+  .firework-heart::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: pink;
+    border-radius: 50%;
+  }
+  .firework-heart::before { top: -6px; left: 0; }
+  .firework-heart::after { left: 6px; top: 0; }
+
+  @keyframes explode {
+    0% { transform: translate(0,0) scale(1); opacity:1; }
+    100% { transform: translate(var(--x), var(--y)) scale(0.5); opacity:0; }
+  }
+
+  @media(max-width:600px){
+    h1 { font-size: 2em; }
+    button { padding: 12px 18px; font-size: 0.9em; }
+    #message { font-size: 1.1em; }
+  }
+
+</style>
+</head>
+<body>
+
+<h1>💜 Coffret d'Amitié pour toi Gilbert 💜</h1>
+<p id="welcome">Tu n’es jamais seul, Gilbert. Tu es quelqu’un de spécial et précieux 💜.</p>
+
+<div class="btn-container">
+  <button class="motivation" onclick="showMessage('motivation')">💪 Motivation</button>
+  <button class="reconfort" onclick="showMessage('reconfort')">🌈 Réconfort</button>
+  <button class="fun" onclick="showMessage('fun')">😆 Fun / Surprise</button>
+</div>
+
+<div id="message"></div>
+
+<script>
+  // === Messages ===
+  const messages = {
+    motivation: [
+      "Gilbert, tu es capable de tout ! Chaque petit pas compte 😊.",
+      "Même quand c'est difficile, n'oublie jamais ta force intérieure 💪.",
+      "Tu es intelligent, courageux et capable de réussir tout ce que tu entreprends 🌟.",
+      "Parfois, ça va mal, et c’est normal. Respire et souris, tu es formidable 🌈.",
+      "on se connait juste par reseau sociaux mais nous sommes devenue si proches que suis totalement rassurer de savoir avec qui je suis 💖."
+    ],
+    reconfort: [
+      "Tu es précieux et ton sourire illumine la journée de ceux qui t'entourent 🌸.",
+      "Même dans les moments difficiles, n'oublie jamais que tu es aimé 💜.",
+      "Respire profondément, Gilbert. Chaque nuage finit par passer ☀️.",
+      "Garde confiance, même à distance, sache que tu n'es pas seul 💖.",
+      "Un câlin virtuel rien que pour toi 🤗."
+    ],
+    fun: [
+      "Pourquoi les ordinateurs n'aiment-ils pas le soleil ? Parce qu’ils ont peur des bugs ! 😆",
+      "Reste toi-même, ton humour rend le monde plus lumineux 🌟.",
+      "Un petit sourire rien que pour toi : 😄 Tu es génial !",
+      "Si la vie te donne des citrons… ajoute du sucre et fais une limonade magique 🍋✨",
+      "Danse comme si personne ne regardait… même en pyjama ! 💃"
+    ]
+  };
+
+  const messageDiv = document.getElementById('message');
+
+  // === Afficher message lettre par lettre ===
+  function typeMessage(text) {
+    messageDiv.innerHTML = '';
+    let i = 0;
+    const interval = setInterval(() => {
+      messageDiv.innerHTML += text.charAt(i);
+      i++;
+      if(i === text.length){
+        clearInterval(interval);
+        triggerFireworks();
+      }
+    }, 50);
+  }
+
+  // === Choisir message aléatoire ===
+  function showMessage(type){
+    const arr = messages[type];
+    const msg = arr[Math.floor(Math.random() * arr.length)];
+    typeMessage(msg);
+  }
+
+  // === Mini feu d'artifice ===
+  function triggerFireworks() {
+    const num = 15;
+    for(let i=0; i<num; i++){
+      const heart = document.createElement('div');
+      heart.className = 'firework-heart';
+      heart.style.left = messageDiv.offsetLeft + messageDiv.offsetWidth/2 + 'px';
+      heart.style.top = messageDiv.offsetTop + 'px';
+      heart.style.setProperty('--x', (Math.random()*200-100)+'px');
+      heart.style.setProperty('--y', (Math.random()*-200)+'px');
+      heart.style.animation = `explode 800ms forwards`;
+      document.body.appendChild(heart);
+      setTimeout(() => document.body.removeChild(heart), 800);
+    }
+  }
+
+  // === Cœurs flottants aléatoires en fond ===
+  function createBackgroundHearts(num){
+    for(let i=0; i<num; i++){
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random()*window.innerWidth + 'px';
+      heart.style.top = Math.random()*window.innerHeight + 'px';
+      heart.style.animationDuration = (4 + Math.random()*4) + 's';
+      heart.style.opacity = Math.random()*0.7 + 0.3;
+      document.body.appendChild(heart);
+    }
+  }
+
+  createBackgroundHearts(20);
+
+  window.addEventListener('resize', ()=>{
+    document.querySelectorAll('.heart').forEach(h => h.remove());
+    createBackgroundHearts(20);
+  });
+
+  // === Cœurs interactifs au clic ===
+  document.body.addEventListener('click', e => {
+    const heart = document.createElement('div');
+    heart.className = 'click-heart';
+    heart.style.left = (e.clientX - 10) + 'px';
+    heart.style.top = (e.clientY - 10) + 'px';
+    heart.style.animation = 'pop 1s forwards';
+    document.body.appendChild(heart);
+    setTimeout(()=> document.body.removeChild(heart), 1000);
+  });
+</script>
+
+</body>
+</html>
